@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Voting Form</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+</head>
+<body>
+<style>
+    form{
+        border: 2px solid green;
+        max-width: 600px;
+        margin: auto;
+    }
+    form > div{
+        margin: 20px;
+    }
+
+</style>
+<div class="container-sm">
+    <div> <h1>Sampler</h1></div>
+<form>
+    <div>
+            <label for="event" class="form-label"> Date and time of the event:</label>
+            <input id="event"
+                   class="form-control"
+                   type="datetime-local"
+                   name="Event Date"
+                   min="2022-01-01T00:00"
+                   max="2024-12-31T00:00"
+                   value = ""
+                   required />
+            <span class="validity"></span>
+      </div>
+       <div>
+           <label for="team1" class="form-label"> Team 1:</label>
+            <select class="form-control" name="Team 1" id="team1" required>
+                <option value=""> Select your Team</option>
+                <option value="Hot Shots 1">Hot Shots 1</option>
+                <option value="Hot Shots 2">Hot Shots 2</option>
+                <option value="Hot Shots 3">Hot Shots 3</option>
+                <option value="St Marys">St Marys</option>
+                <option value="WGC">WGC</option>
+                <option value="Vic Uni 1">Vic Uni 1</option>
+            </select>
+
+       </div>
+        <div>
+           <label for="team1score" class="form-label"> Team 1 Score:</label>
+           <input type="number" class="form-control" id="team1score" name="Team 1 score"
+                  min="0" max="100" step="1" placeholder="" value="" required>
+        </div>
+        <div>
+           <label for="team2" class="form-label"> Team 2:</label>
+            <select class="form-control" name="Team 1" id="team2" required>
+                <option value=""> Select your Team</option>
+                <option value="Hot Shots 1">Hot Shots 1</option>
+                <option value="Hot Shots 2">Hot Shots 2</option>
+                <option value="Hot Shots 3">Hot Shots 3</option>
+                <option value="St Marys">St Marys</option>
+                <option value="WGC">WGC</option>
+                <option value="Vic Uni 1">Vic Uni 1</option>
+            </select>
+        </div>
+            <div>
+           <label for="team2score" class="form-label"> Team 2 Score:</label>
+           <input type="number" class="form-control" id="team2score" name="Team 2 score"
+                  min="0" max="100" step="1" placeholder="" value="" required>
+        </div>
+    <div class="text-end mb-2">
+        <button type="reset" class="btn btn-primary">Reset</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+    <script>
+        let a = document.querySelector("#team1")
+        a.value="WGC"
+         let b = document.querySelector("#team2")
+        b.value="Hot Shots 1"
+    </script>
+</div>
+
+
+
+
+
+</body>

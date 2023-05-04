@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+  input[type=number]{
+      max-width: 6em;
+      font-size: 1.5em;
+      text-align: center;
+  }
+  label{
+      font-size: 1.2em;
+      min-width:8em;
+  }
+
+  .msg{
+
+
+  animation-name: example;
+  animation-duration: 4s;
+      user-select: none;
+      color:white;
+  }
+
+  @keyframes example {
+  from {background-color: rgba(0,255,0,1); color:black;}
+  to {background-color: rgba(0,255,0,0); color:white; }
+}
+
+
+
+
+</style>
+<div class="container-sm border border-2 p-0">
+    {% if complete %}
+    <div class="msg text-center"> Your score has been updated</div>
+    {% endif %}
+    {% for row in team_data %}
+        <form action="{{url_for('allscores', id=row['game_id'] )}}" method="POST" id="form{{loop.index0}}"></form>
+
+    {% endfor %}
+<!-- use a form attribute -->
+  <table class="table table-bordered mx-auto align-middle table-striped m-0">
+      {% for row in team_data %}
+
+  <form action="{{url_for('allscores', id=row['game_id'] )}}" method="POST">
+
+
+      <tr>
+          <!-- <td> <label for="test" class="form-label">Test</label><input type="text" id="test" name="{{loop.index0}},3"></td> -->
+            <td> {{ row['game_date'] }}</td>
+            <td><label for="team1score{{loop.index0}}" class="form-label"> {{row['team_1']}}</label> </td>
+            <td class="px-1"><input type="number" class="form-control" id="team1score{{loop.index0}}" name="score_1"  min="0" max="100" step="1" placeholder="" value={{row['score_1']}} required></td>
+            <td>  <label for="team2score{{loop.index0}}" class="form-label"> {{row['team_2']}}</label></td>
+            <td class="px-1"> <input type="number" class="form-control" id="team2score{{loop.index0}}" name="score_2" min="0" max="100" step="1" placeholder="" value={{row['score_2']}} required></td>
+            <td class="text-center">   <button type="reset" class="btn btn-info text-white">Reset</button></td>
+            <td class="text-center">   <button type="submit" class="btn btn-info text-white">Submit</button></td>
+      </tr>
+       </form>
+
+
+
+      {% endfor %}
+       </table>
+
+
+</div>
+{% endblock %}

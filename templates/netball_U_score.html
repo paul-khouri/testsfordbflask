@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+    form{
+        border: 2px solid green;
+        max-width: 600px;
+        margin: auto;
+    }
+    form > div{
+        margin: 20px;
+    }
+
+</style>
+<div class="container-sm">
+<form action="{{url_for('addscore', id=id)}}" method="POST">
+        <div>
+           <label for="team1score" class="form-label"> {{team_data['team_1']}} Score:</label>
+           <input type="number" class="form-control" id="team1score" name="score_1"
+                  min="0" max="100" step="1" placeholder="" value="" required>
+        </div>
+            <div>
+           <label for="team2score" class="form-label"> {{team_data['team_2']}} Score:</label>
+           <input type="number" class="form-control" id="team2score" name="score_2"
+                  min="0" max="100" step="1" placeholder="" value="" required>
+        </div>
+    <div class="text-end mb-2">
+        <button type="reset" class="btn btn-primary">Reset</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+</div>
+{% endblock %}

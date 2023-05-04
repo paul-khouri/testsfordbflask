@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+    .table{
+        font-size: 1.25em;
+    }
+</style>
+<div class="container bg-light">
+{% set ns=namespace(drawdate = "") %}
+
+{% for row in games %}
+    {% if loop.index0 == 0 %}
+        {% set ns.drawdate=row['Date'] %}
+        <h2 class="text-center"> Draw date: {{ns.drawdate}}</h2>
+        <table class="table w-50 mx-auto">
+        <thead>
+        <tr><th>Time</th><th>Team 1</th><th>Team 2</th></tr>
+        </thead>
+
+    {% endif %}
+    {% if ns.drawdate != row['Date'] %}
+        {% set ns.drawdate=row['Date'] %}
+        </table>
+        <h2 class="text-center">Draw date: {{ns.drawdate}}</h2>
+        <table class="table w-50 mx-auto">
+        <thead>
+        <tr><th>Time</th><th>Team 1</th><th>Team 2</th></tr>
+
+        </thead>
+
+    {% endif %}
+    <tr><td>{{ row['Time'] }}</td><td> {{ row['team_1'] }}</td><td>{{ row['team_2'] }}</td></tr>
+     <tr><td colspan="4" class="text-end">
+         <a class="btn btn-info" href="{{ url_for('addscore' , id=row['game_id'] ) }}" role="button">
+         Add score</a> </td> </tr>
+{% endfor %}
+</table>
+
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+    .table{
+        font-size: 1.25em;
+    }
+</style>
+<div class="container bg-light">
+{% set ns=namespace(drawdate = "") %}
+
+{% for row in scores %}
+    {% if loop.index0 == 0 %}
+        {% set ns.drawdate=row['Date'] %}
+        <h2 class="text-center">Results: {{ns.drawdate}}</h2>
+    <div class="text-end">
+     <a class="btn btn-info" href="{{ url_for('allscores') }}" role="button">Update all scores </a>
+        </div>
+        <table class="table w-50 mx-auto">
+        <thead>
+        <tr><th>Team 1</th><th>Score</th><th>Team 2</th><th>Score</th></tr>
+        </thead>
+
+    {% endif %}
+    {% if ns.drawdate != row['Date'] %}
+        {% set ns.drawdate=row['Date'] %}
+        </table>
+        <h2 class="text-center">Results: {{ns.drawdate}}</h2>
+        <table class="table w-50 mx-auto">
+        <thead>
+        <tr><th>Team 1</th><th>Score</th><th>Team 2</th><th>Score</th></tr>
+        </thead>
+
+    {% endif %}
+    <tr><td>{{ row['team_1'] }}</td><td> {{ row['score_1'] }}</td><td>{{ row['team_2'] }}</td> <td>{{ row['score_2'] }}</td></tr>
+
+{% endfor %}
+</table>
+    </div>
+
+{% endblock %}
