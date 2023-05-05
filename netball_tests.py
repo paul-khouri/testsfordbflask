@@ -1,6 +1,13 @@
 from db_functions import run_search_query_tuples
 
 
+def output(result):
+    for x in result:
+        for k in x.keys():
+            print(k, end=" : ")
+            print(x[k], end=" , ")
+        print()
+
 def get_transpose():
     L= [
         ["A",1],
@@ -39,6 +46,40 @@ def get_all(db_path):
             print(x[k], end=" , ")
         print()
 
+def get_teams(db_path):
+    sql = "select * from team"
+    result = run_search_query_tuples(sql, (), db_path, True)
+    output(result)
+
+
+
+
+def get_matches(db_path):
+    sql="""select match.match_date, team.team_name, match_team.points
+    from match
+    join match_team on match.match_id = match_team.match_id
+    join team on match_team.team_id = team.team_id"""
+    result = run_search_query_tuples(sql, (), db_path, True)
+    for x in result:
+        for k in x.keys():
+            print(k, end=" : ")
+            print(x[k], end=" , ")
+        print()
+
+
+def get_draw(db_path):
+    sql = """ select d.draw_date as "Game Date", b.team_name as "Team 1", d.score_1 , c.team_name as "Team 2", d.score_2
+    from draw d
+    join team b on  d.team_1 = b.team_id
+    join team c on  d.team_2 = c.team_id 
+    where "Team 1" like 'Hot%' or c.team_name like 'Hot%'"""
+    result = run_search_query_tuples(sql, (), db_path, True)
+    output(result)
+
+
+
+
+
 
 
 
@@ -47,4 +88,7 @@ if __name__ == "__main__":
     db_path = 'data_netball/netball.sqlite'
     #get_all(db_path)
     #get_dates(db_path)
-    get_transpose()
+    #get_transpose()
+    get_teams(db_path)
+    #get_matches(db_path)
+    #get_draw(db_path)
