@@ -103,17 +103,9 @@ create table draw
     team_2    integer not null,
     score_2   integer,
     foreign key (team_1) references team (team_id),
-    foreign key (team_2) references team (team_id)
+    foreign key (team_2) references team (team_id),
+    unique(draw_date,team_1,team_2)
 );
 
-insert into draw(draw_date, team_1,score_1, team_2, score_2)
-values('2023-03-22 08:30',
-       (select team_id from team where team_name = 'Hot Shots 3'),56,
-       (select team_id from team where team_name = 'St Marys 2'),88
-       );
-insert into draw(draw_date, team_1,team_2)
-values('2023-03-22 12:30',
-       (select team_id from team where team_name = 'Vic Uni 1'),
-       (select team_id from team where team_name = 'Hot Shots 1')
-       );
+
 

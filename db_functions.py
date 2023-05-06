@@ -126,6 +126,20 @@ def netball():
     sql_path = 'data_netball/netball_install.sql'
     db_path = 'data_netball/netball.sqlite'
     execute_external_script(sql_path, db_path)
+    csv_path='data_netball/DBPracticeSheets-matches.csv'
+    csv_data = file_reader(csv_path)
+    csv_data.pop(0)
+    sql = """ insert into draw(draw_date, team_1, team_2)
+values(?,
+       (select team_id from team where team_name = ?),
+       (select team_id from team where team_name = ?)
+       );"""
+    for row in csv_data:
+        values_tuple=(row[0], row[1], row[3])
+        #print(values_tuple)
+        result = run_commit_query(sql, values_tuple, db_path)
+        if not result:
+            print(values_tuple)
 
 
 if __name__ == "__main__":
