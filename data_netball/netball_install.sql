@@ -1,50 +1,14 @@
 
-/* single table */
-drop table if exists game;
 
-create table game(
-    game_id integer primary key autoincrement ,
-    game_date datetime not null unique ,
-    team_1 text not null,
-    score_1 integer not null,
-    team_2 text not null,
-    score_2 integer not null
-);
-
-insert into game(game_date, team_1, score_1, team_2, score_2)
-values('2023-03-22 08:30','Hot Shots 3',	28,	'St Marys 2',30);
-insert into game(game_date, team_1, score_1, team_2, score_2)
-values('2023-03-22 12:30','Vic Uni 1',10,'Hot Shots 1',25);
-insert into game(game_date, team_1, score_1, team_2, score_2)
-values('2023-03-22 14:00', 'WGC'	, 28, 'Hot Shots 2',39);
-insert into game(game_date, team_1, score_1, team_2, score_2)
-values('2023-03-29 09:00','Hot Shots 3',13,'St Marys 2',28);
-insert into game(game_date, team_1, score_1, team_2, score_2)
-values('2023-03-29 10:30', 'Vic Uni 1',	39, 'Hot Shots 1',40);
-insert into game(game_date, team_1, score_1, team_2, score_2)
-values('2023-03-29 12:30','WGC',15, 'Hot Shots 2',23);
 
 /* many tables */
-drop table if exists match;
-drop table if exists team;
-drop table if exists match_team;
 
-create table match(
-    match_id integer primary key autoincrement ,
-    match_date date not null ,
-    location text not null
-);
+
+drop table if exists team;
 
 create table team(
     team_id integer primary key autoincrement ,
     team_name text not null unique
-);
-
-create table match_team(
-    team_id integer not null ,
-    match_id integer not null ,
-    points integer,
-    primary key (team_id, match_id)
 );
 
 insert into team(team_name)
@@ -64,33 +28,6 @@ values('WGC 1');
 insert into team(team_name)
 values('WGC 2');
 
-insert into match(match_date, location)
-values('2023-03-22 08:30', 'ASB');
-insert into match(match_date, location)
-values('2023-03-22 12:30', 'ASB');
-insert into match(match_date, location)
-values('2023-03-22 14:00', 'ASB');
-insert into match(match_date, location)
-values('2023-03-29 09:00', 'ASB');
-insert into match(match_date, location)
-values('2023-03-29 10:30', 'ASB');
-insert into match(match_date, location)
-values('2023-03-29 12:30', 'ASB');
-
-insert into match_team(team_id,match_id)
-values((select team_id from team where team_name = 'Hot Shots 3'),
-       (select match_id from match where match_date = '2023-03-22 08:30'));
-insert into match_team(team_id,match_id)
-values((select team_id from team where team_name = 'St Marys 2'),
-       (select match_id from match where match_date = '2023-03-22 08:30'));
-
-insert into match_team(team_id,match_id)
-values((select team_id from team where team_name = 'Hot Shots 1'),
-       (select match_id from match where match_date = '2023-03-22 12:30'));
-insert into match_team(team_id,match_id)
-values((select team_id from team where team_name = 'Vic Uni 1'),
-       (select match_id from match where match_date = '2023-03-22 12:30'));
-
 /* -- */
 drop table if exists draw;
 
@@ -106,6 +43,75 @@ create table draw
     foreign key (team_2) references team (team_id),
     unique(draw_date,team_1,team_2)
 );
+
+drop table if exists member;
+create table member
+(
+    member_id integer primary key autoincrement ,
+    member_name text not null,
+    member_type text,
+    team_id integer,
+    email text not null,
+    dob date,
+    password text not null,
+    authorisation inetger not null,
+    foreign key (team_id) references team (team_id)
+);
+
+drop table if exists class;
+create table class
+(
+    class_id integer primary key autoincrement ,
+    class_name text not null,
+    elevator_pitch text not null,
+    content text not null,
+    start_date date,
+    frequency integer,
+    duration integer
+);
+
+insert into class(class_name, elevator_pitch, content, start_date, frequency, duration)
+values(
+'Dynamic Warm up',
+'Prepare the body, heart and mind for the upcoming activity',
+'Due to the nature of the game - explosive, powerful movements, repeated '||
+'Anterior cruciate ligament injuries are devastating'||
+'knee injuries that occur in sports such as Netball.'||
+'This injury will put an athlete out of sport and Netball'||
+'for up to a year.' ||char(10) ||
+ 'The Netball Dynamic Warm-Up helps prevent'||
+'both of these common Netball injuries.',
+'14/07/2023',
+7,
+4
+);
+
+insert into class(class_name, elevator_pitch, content, start_date, frequency, duration)
+values(
+'Landing Skills',
+'The focus is on the skill of the landing movement rather than the height of the jump',
+'Landing Skill sessions should be short in duration and '||
+'focused on quality. The focus is on the skill of the landing'||
+'movement rather than the height of the jump.'|| char(10) ||
+'Once a player has developed the skill and quality of the'||
+'landing movement they can progress onto plyometric' ||
+ 'activity or harder balance, proprioception tasks.',
+'18/07/2023',
+7,
+6
+);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

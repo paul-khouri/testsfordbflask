@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from db_functions import run_search_query_tuples, run_commit_query
+from q_set import get_members
 from datetime import datetime
 
 app = Flask(__name__)
@@ -109,6 +110,13 @@ def addgame():
         values_tuple = (draw_date, f['team_1'], f['team_2'])
         result = run_commit_query(sql, values_tuple, db_path)
         return redirect(url_for('index'))
+
+
+@app.route('/member')
+def member():
+    result = get_members(db_path)
+    return render_template("member.html", members = result)
+
 
 
 if __name__ == "__main__":

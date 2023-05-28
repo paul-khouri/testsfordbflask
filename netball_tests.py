@@ -26,25 +26,20 @@ def get_transpose():
         print(y)
 
 
+def get_schema(db_path):
+    sql="""SELECT 
+                name
+            FROM 
+                sqlite_master
+            WHERE 
+                type ='table' AND 
+                name NOT LIKE 'sqlite_%';"""
+    result = run_search_query_tuples(sql, (), db_path, False)
+    print(result)
 
 
 
-def get_dates(db_path):
-    sql = """select strftime('%Y-%m-%d ', game_date) as "Date", strftime('%H:%M', game_date) as "Time", team_1, team_2 from game"""
-    result = run_search_query_tuples(sql,(),db_path, True)
-    for x in result:
-        for k in x.keys():
-            print(x[k], end=" , ")
-        print()
 
-
-def get_all(db_path):
-    sql = """select * from game"""
-    result = run_search_query_tuples(sql,(),db_path, True)
-    for x in result:
-        for k in x.keys():
-            print(x[k], end=" , ")
-        print()
 
 def get_teams(db_path):
     sql = "select * from team"
@@ -52,19 +47,22 @@ def get_teams(db_path):
     output(result)
 
 
-
-
-def get_matches(db_path):
-    sql="""select match.match_date, team.team_name, match_team.points
-    from match
-    join match_team on match.match_id = match_team.match_id
-    join team on match_team.team_id = team.team_id"""
-    result = run_search_query_tuples(sql, (), db_path, True)
+def get_members(db_path):
+    sql = """select 
+    m.member_name, m.member_type, t.team_name as team, 
+    m.email,m.dob, m.password, m.authorisation
+    from member m
+    left join team t on m.team_id = t.team_id
+    order by team asc, member_name asc;"""
+    result = run_search_query_tuples(sql, (), db_path, False)
     for x in result:
-        for k in x.keys():
-            print(k, end=" : ")
-            print(x[k], end=" , ")
-        print()
+        print(x)
+
+
+
+
+
+
 
 
 def get_draw(db_path):
@@ -86,9 +84,9 @@ def get_draw(db_path):
 
 if __name__ == "__main__":
     db_path = 'data_netball/netball.sqlite'
-    #get_all(db_path)
-    #get_dates(db_path)
+
     #get_transpose()
-    get_teams(db_path)
-    #get_matches(db_path)
+    #get_teams(db_path)
     #get_draw(db_path)
+    #get_schema(db_path)
+    get_members(db_path)

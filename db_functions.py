@@ -129,13 +129,24 @@ def netball():
     csv_path='data_netball/DBPracticeSheets-matches.csv'
     csv_data = file_reader(csv_path)
     csv_data.pop(0)
-    sql = """ insert into draw(draw_date, team_1, team_2)
+    sql = """ insert into draw(draw_date, team_1, team_2, score_1, score_2)
 values(?,
        (select team_id from team where team_name = ?),
-       (select team_id from team where team_name = ?)
+       (select team_id from team where team_name = ?), ?, ?
        );"""
     for row in csv_data:
-        values_tuple=(row[0], row[1], row[3])
+        values_tuple=(row[0], row[1], row[3], row[2], row[4])
+        #print(values_tuple)
+        result = run_commit_query(sql, values_tuple, db_path)
+        if not result:
+            print(values_tuple)
+    csv_path='data_netball/members.csv'
+    csv_data = file_reader(csv_path)
+    csv_data.pop(0)
+    sql = """insert into member(member_name, member_type, team_id, email, dob, password, authorisation)
+    values(?,?,(select team_id from team where team_name = ? ),?,?,?,?)"""
+    for row in csv_data:
+        values_tuple=(row[0], row[1], row[2], row[3], row[4], row[5], row[6])
         #print(values_tuple)
         result = run_commit_query(sql, values_tuple, db_path)
         if not result:

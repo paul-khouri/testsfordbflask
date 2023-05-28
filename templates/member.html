@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="container bg-light">
+<h2 class="text-center"> Members </h2>
+    <table class="table">
+        {% for row in members %}
+            <tr><td>{{ row['member_name'] }}</td>
+            <td>{{ row['member_type'] }}</td>
+            <td>{{ row['team'] }}</td>
+            <td>{{ row['email'] }}</td>
+            <td>{{ row['dob'] }}</td>
+            <td>{{ row['password'] }}</td>
+            <td>{{ row['authorisation'] }}</td>
+            </tr>
+        {% endfor %}
+
+    </table>
+    </div>
+{% endblock %}
