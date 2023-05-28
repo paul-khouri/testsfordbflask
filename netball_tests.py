@@ -59,12 +59,6 @@ def get_members(db_path):
         print(x)
 
 
-
-
-
-
-
-
 def get_draw(db_path):
     sql = """ select d.draw_date as "Game Date", b.team_name as "Team 1", d.score_1 , c.team_name as "Team 2", d.score_2
     from draw d
@@ -74,7 +68,12 @@ def get_draw(db_path):
     result = run_search_query_tuples(sql, (), db_path, True)
     output(result)
 
-
+def get_class(db_path):
+    sql="""select class_id, class_name, elevator_pitch, 
+    content, start_date, frequency, duration 
+    from class"""
+    result = run_search_query_tuples(sql, (), db_path, True)
+    output(result)
 
 
 
@@ -89,4 +88,5 @@ if __name__ == "__main__":
     #get_teams(db_path)
     #get_draw(db_path)
     #get_schema(db_path)
-    get_members(db_path)
+    #get_members(db_path)
+    get_class(db_path)

@@ -13,6 +13,12 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <style>
+    body{
+        font-size: 100%;
+    }
+    .body-text{
+        font-size: 1.2em;
+    }
     .table{
         font-size: 1.25em;
     }
@@ -46,7 +52,7 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <li><a class="dropdown-item" href="{{ url_for('member') }}">Members</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('classes') }}">Training Classes</a></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>

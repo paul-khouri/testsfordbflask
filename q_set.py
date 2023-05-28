@@ -10,3 +10,13 @@ def get_members(db_path):
     order by team asc, member_name asc;"""
     result = run_search_query_tuples(sql, (), db_path, True)
     return result
+
+
+def get_class(db_path):
+    sql="""select class_id, class_name, elevator_pitch, 
+    content, start_date, frequency, duration 
+    from class
+    order by start_date asc"""
+    result = run_search_query_tuples(sql, (), db_path, True)
+    return result
+

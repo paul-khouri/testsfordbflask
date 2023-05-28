@@ -76,12 +76,12 @@ values(
 'Prepare the body, heart and mind for the upcoming activity',
 'Due to the nature of the game - explosive, powerful movements, repeated '||
 'Anterior cruciate ligament injuries are devastating'||
-'knee injuries that occur in sports such as Netball.'||
-'This injury will put an athlete out of sport and Netball'||
-'for up to a year.' ||char(10) ||
+' knee injuries that occur in sports such as Netball.'||
+' This injury will put an athlete out of sport and Netball'||
+' for up to a year.' ||char(10) ||
  'The Netball Dynamic Warm-Up helps prevent'||
-'both of these common Netball injuries.',
-'14/07/2023',
+' both of these common Netball injuries.',
+'2023-07-14',
 7,
 4
 );
@@ -96,10 +96,38 @@ values(
 'Once a player has developed the skill and quality of the'||
 'landing movement they can progress onto plyometric' ||
  'activity or harder balance, proprioception tasks.',
-'18/07/2023',
+'2023-07-18',
 7,
 6
 );
+
+insert into class(class_name, elevator_pitch, content, start_date, frequency, duration)
+values(
+'Prep ‘n’ Play',
+'A skill based programme to aid transition to Game Play.',
+'Get fit for the Netball season, build strength, '||
+'core control and stability, and develop good Netball movement patterns.'|| char(10) ||
+'ACC statistics show that '||
+'between the months of April and May there is '||
+'a 300% spike in Netball related injuries. This' ||
+'programme is designed to help transition players'||
+'into the season and equip players with the knowledge on what they,'||
+' can be doing to support their strength and fitness in the off-season.',
+'2023-07-11',
+7,
+4
+);
+
+
+
+
+
+
+
+
+
+
+
 
 
 

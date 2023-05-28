@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from db_functions import run_search_query_tuples, run_commit_query
-from q_set import get_members
+from q_set import get_members, get_class
 from datetime import datetime
 
 app = Flask(__name__)
@@ -116,6 +116,12 @@ def addgame():
 def member():
     result = get_members(db_path)
     return render_template("member.html", members = result)
+
+
+@app.route('/classes')
+def classes():
+    result = get_class(db_path)
+    return render_template("class.html", classes = result)
 
 
 
