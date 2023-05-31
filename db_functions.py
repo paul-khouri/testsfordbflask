@@ -151,6 +151,23 @@ values(?,
         result = run_commit_query(sql, values_tuple, db_path)
         if not result:
             print(values_tuple)
+    classes= ['Dynamic Warm up','Landing Skills', 'Prep ‘n’ Play']
+    sql = """insert into registration(member_id, class_id, registration_date, attendance) 
+    values(
+    (select member_id from member where member_name = ?),
+    (select class_id from class where class_name = ?),
+    '2023-06-01',
+    0); """
+    i=0
+    for row in csv_data:
+        values_tuple = (row[0], classes[i%3])
+        result = run_commit_query(sql, values_tuple, db_path)
+        if not result:
+            print(values_tuple)
+        i += 1
+
+
+
 
 
 if __name__ == "__main__":

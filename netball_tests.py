@@ -68,6 +68,7 @@ def get_draw(db_path):
     result = run_search_query_tuples(sql, (), db_path, True)
     output(result)
 
+
 def get_class(db_path):
     sql="""select class_id, class_name, elevator_pitch, 
     content, start_date, frequency, duration 
@@ -75,6 +76,17 @@ def get_class(db_path):
     result = run_search_query_tuples(sql, (), db_path, True)
     output(result)
 
+
+def get_registrations(db_path):
+    sql = """ select count(m.member_name), c.class_name, r.registration_date, 
+    r.attendance 
+    from member m 
+    join registration r on m.member_id = r.member_id
+    join class c on c.class_id = r.class_id
+    group by c.class_name
+    order by c.class_name asc"""
+    result = run_search_query_tuples(sql,(), db_path, True)
+    output(result)
 
 
 
@@ -89,4 +101,5 @@ if __name__ == "__main__":
     #get_draw(db_path)
     #get_schema(db_path)
     #get_members(db_path)
-    get_class(db_path)
+    #get_class(db_path)
+    get_registrations(db_path)

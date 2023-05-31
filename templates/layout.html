@@ -22,6 +22,31 @@
     .table{
         font-size: 1.25em;
     }
+
+      input[type=number]{
+      max-width: 6em;
+      font-size: 1.5em;
+      text-align: center;
+      min-width: 3em;
+  }
+  label{
+      font-size: 1.2em;
+      min-width:8em;
+  }
+
+  .msg{
+
+
+  animation-name: example;
+  animation-duration: 4s;
+      user-select: none;
+      color:white;
+  }
+
+  @keyframes example {
+  from {background-color: rgba(0,255,0,1); color:black;}
+  to {background-color: rgba(0,255,0,0); color:white; }
+}
 </style>
 
 </head>
@@ -53,7 +78,7 @@
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <li><a class="dropdown-item" href="{{ url_for('member') }}">Members</a></li>
             <li><a class="dropdown-item" href="{{ url_for('classes') }}">Training Classes</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('registration') }}">Registration</a></li>
           </ul>
         </li>
       </ul>

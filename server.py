@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from db_functions import run_search_query_tuples, run_commit_query
-from q_set import get_members, get_class
+from q_set import get_members, get_class, get_class_registrations
 from datetime import datetime
 
 app = Flask(__name__)
@@ -123,6 +123,55 @@ def classes():
     result = get_class(db_path)
     return render_template("class.html", classes = result)
 
+
+@app.route('/registration', methods=['GET', 'POST'])
+def registration():
+    message = None
+    errormessage = None
+    if request.method == "GET":
+        data = request.args
+        if 'id' not in data.keys():
+            return render_template("error.html", message="No valid id")
+        elif 'title' not in data.keys():
+            return render_template("error.html", message="No valid title")
+        if 'message' in data.keys():
+            message = data['message']
+        if 'errormessage' in data.keys():
+            message = data['errormessage']
+        if 'delete_id' in data.keys():
+            sql = "delete from registration where member_id = ?"
+            values_tuple = (data['delete_id'],)
+            result = run_commit_query(sql, values_tuple, db_path)
+        result = get_class_registrations(data['id'], db_path)
+        member_result = get_members(db_path)
+        return render_template("registration.html",
+                               id=data['id'],
+                               title=data['title'],
+                               registrations=result,
+                               members=member_result,
+                               message=message,
+                               errormessage=errormessage)
+    elif request.method == "POST":
+        f = request.form
+        data = request.args
+        sql = """insert into registration(member_id, class_id, registration_date, attendance)
+         values(
+         (select member_id from member where member_name=?),
+         (select class_id from class where class_name=? ), 
+         date('now'), 0)"""
+        values_tuple=(f['member'], f['title'])
+        result = run_commit_query(sql, values_tuple, db_path)
+        if result is False:
+            errormessage = "Something went wrong, please check that name is not already in this course"
+        else:
+            message = "Successfully added"
+        return redirect(url_for('registration',
+                                id=data['id'],
+                                title=data['title'],
+                                message=message,
+                                errormessage=errormessage))
+
+        # return render_template("error.html", message="Posted")
 
 
 if __name__ == "__main__":

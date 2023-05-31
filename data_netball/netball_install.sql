@@ -109,13 +109,24 @@ values(
 'core control and stability, and develop good Netball movement patterns.'|| char(10) ||
 'ACC statistics show that '||
 'between the months of April and May there is '||
-'a 300% spike in Netball related injuries. This' ||
+'a 300% spike in Netball related injuries. This ' ||
 'programme is designed to help transition players'||
 'into the season and equip players with the knowledge on what they,'||
 ' can be doing to support their strength and fitness in the off-season.',
 '2023-07-11',
 7,
 4
+);
+
+drop table if exists registration;
+create table registration(
+    member_id integer not null,
+    class_id integer not null,
+    registration_date date not null,
+    attendance integer not null,
+    primary key (member_id, class_id),
+    foreign key (member_id) references member (member_id),
+    foreign key (class_id) references class (class_id)
 );
 
 

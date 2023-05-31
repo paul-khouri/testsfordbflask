@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <style>
+    input:read-only {
+        cursor: default;
+        color:grey;
+    }
+    </style>
+        <div class="container">
+        {% if message %}
+        <div class="msg text-center">{{ message }}</div>
+        {% endif %}
+        {% if errormessage %}
+        <div class="msg text-center">{{ errormessage }}</div>
+        {% endif %}
+<h2 class="display-5"> {{ title }} </h2>
+            <div class="row fw-bold fs-5">
+                <div class="col-3">
+                Member Name
+                </div>
+                <div class="col-3">
+                Email
+                </div>
+                <div class="col-2">
+                DOB
+                </div>
+                <div class="col-2">
+                Attendance
+                </div>
+                 <div class="col-2">
+                Action
+                </div>
+            </div>
+        {%  for row in registrations %}
+            <div class="row body-text">
+                <div class="col-md-3">
+                {{ row['member_name'] }}
+                </div>
+                <div class="col-md-3">
+                {{ row['email'] }}
+                </div>
+                <div class="col-md-2">
+                {{ row['dob'] }}
+                </div>
+              <div class="col-md-2">
+                {{ row['attendance'] }}
+                </div>
+             <div class="col-md-2 p-1">
+                 <a class="btn btn-info" href="{{ url_for('registration', id=id, title=title, delete_id=row['member_id']) }}">
+                    Delete
+                </a>
+                </div>
+            </div>
+        {%  endfor %}
+        </div>
+
+
+<div class="container mt-3">
+  <h2>Add a new registration</h2>
+  <form action="{{ url_for('registration', id=id, title=title) }}" method="post">
+  <div>
+    <label for="title" class="form-label">Class</label>
+  <input type="text" class="form-control" id="title" name="title" placeholder="" value="{{ title }}" readonly="readonly">
+  </div>
+    <label for="member" class="form-label">Choose member from the list:</label>
+    <input class="form-control" list="members" name="member" id="member" required>
+    <datalist id="members">
+        {% for row in members %}
+            <option value="{{ row['member_name'] }}">
+        {%  endfor %}
+    </datalist>
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+  </form>
+</div>
+{% endblock %}
