@@ -7,9 +7,13 @@ app = Flask(__name__)
 app.secret_key = "sgdjkdgjdfgkdjfgk"
 db_path = 'data_netball/netball.sqlite'
 
-
 @app.route('/')
 def index():
+    return render_template("index.html")
+
+
+@app.route('/draw')
+def draw():
     sql = """ select d.draw_id as "game_id", 
     strftime('%Y-%m-%d ', d.draw_date) as "Date",
     strftime('%H:%M', d.draw_date) as "Time", 

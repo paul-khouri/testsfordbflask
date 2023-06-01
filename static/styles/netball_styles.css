@@ -1,0 +1,86 @@
+:root{
+    --main-bg-color: rgb(193, 206, 218);
+    --main-bg-color-grad: rgb(200, 210, 228);
+    --titles: rgb(237,46,46);
+    --titles-trans: rgba(215, 101, 22, 0.5);
+    --deepdark: rgb(58, 59, 69);
+    --deepblue-trans: rgba(24, 30, 65, 0.7);
+}
+
+
+body{
+    font-size: 100%;
+}
+h1{
+    color:white;
+}
+.overlay{
+    position:absolute;
+    top:50%;
+    left:50%;
+    color:white;
+    font-size: 8em;
+    transform: translate(-50%,-50%);
+
+}
+.body-text{
+    font-size: 1.2em;
+}
+.table{
+    font-size: 1.25em;
+}
+/* forms */
+input[type=number]{
+    max-width: 6em;
+    font-size: 1.5em;
+    text-align: center;
+    min-width: 3em;
+}
+label{
+    font-size: 1.2em;
+    min-width:8em;
+}
+/* message flash */
+.msg{
+    animation-name: example;
+    animation-duration: 4s;
+    user-select: none;
+    color:white;
+}
+
+@keyframes example {
+from {background-color: rgba(0,255,0,1); color:black;}
+to {background-color: rgba(0,255,0,0); color:white; }
+}
+
+/* navigation */
+/* navigation */
+
+
+.navbar{
+    background-color:  var(--deepdark);
+    border-bottom: 1px solid black;
+}
+.navbar-brand{
+    color:white;
+}
+
+.nav-link{
+    font-size: 1em;
+    color:white;
+}
+.nav-item:hover{
+    background-color: var(--titles-trans) ;
+    color: var(--deepdark);
+}
+.nav-link:hover{
+    color: white;
+}
+.btn-outline{
+    border: 1px solid white;
+    padding: 0.25em 1em;
+}
+.btn-outline:hover{
+    background-color:var(--titles-trans);
+
+}

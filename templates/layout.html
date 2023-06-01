@@ -3,7 +3,7 @@
 
 <head>
 
-<title>Testing</title>
+<title>Netball</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -12,58 +12,21 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<style>
-    body{
-        font-size: 100%;
-    }
-    .body-text{
-        font-size: 1.2em;
-    }
-    .table{
-        font-size: 1.25em;
-    }
-
-      input[type=number]{
-      max-width: 6em;
-      font-size: 1.5em;
-      text-align: center;
-      min-width: 3em;
-  }
-  label{
-      font-size: 1.2em;
-      min-width:8em;
-  }
-
-  .msg{
-
-
-  animation-name: example;
-  animation-duration: 4s;
-      user-select: none;
-      color:white;
-  }
-
-  @keyframes example {
-  from {background-color: rgba(0,255,0,1); color:black;}
-  to {background-color: rgba(0,255,0,0); color:white; }
-}
-</style>
-
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/netball_styles.css') }}">
 </head>
 
 <body>
 
-<h1 class="text-center">Header</h1>
- <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
+ <nav class="navbar navbar-expand-sm px-5" >
   <div class="container-fluid">
-    <a class="navbar-brand" href="">Logo</a>
+    <a class="navbar-brand" href="{{ url_for('index') }}">Home</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="mynavbar">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link" href = "{{ url_for('index') }}"> Draw</a>
+          <a class="nav-link" href = "{{ url_for('draw') }}"> Draw</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href = "{{ url_for('results') }}"> Results</a>
@@ -99,12 +62,17 @@
     </div>
   </div>
 </nav>
+ <div class="container-fluid bg-dark m-0 position-relative">
+    <img class="img-fluid mx-auto d-block" src="{{ url_for('static',filename='images/banner_netball_1.jpg') }}" alt="Banner image">
+<div class="text-center overlay">Hot Shots</div>
+</div>
+ <div class="container-fluid bg-dark text-center fs-1"> <h1>{% block heading %} Home {% endblock %}</h1></div>
 
 
 {% block content %}
 
  {% endblock %}
-<footer>
+<footer class="bg-dark">
     <h1 class="text-center">Footer</h1>
 </footer>
 
