@@ -1,14 +1,16 @@
 {% extends "layout.html" %}
+{%  block banner %}src="{{ url_for('static',filename='images/banner_netball_1_slice.jpg') }}{% endblock %}
 
+{% block heading %} Draw {% endblock %}
 {% block content %}
 
-<div class="container bg-light">
+<div class="container bg-light my-3 py-3">
 {% set ns=namespace(drawdate = "") %}
 {% for row in games %}
     {% if loop.index0 == 0 %}
         {% set ns.drawdate=row['Date'] %}
-        <h2 class="text-center"> Draw date: {{ns.drawdate}}</h2>
-        <table class="table w-50 mx-auto">
+        <h2 class="text-center">{{ns.drawdate}}</h2>
+        <table class="table  mx-auto">
         <thead>
         <tr><th>Time</th><th>Team 1</th><th>Team 2</th></tr>
         </thead>
@@ -16,8 +18,8 @@
     {% if ns.drawdate != row['Date'] %}
         {% set ns.drawdate=row['Date'] %}
         </table>
-        <h2 class="text-center">Draw date: {{ns.drawdate}}</h2>
-        <table class="table w-50 mx-auto">
+        <h2 class="text-center">{{ns.drawdate}}</h2>
+        <table class="table  mx-auto">
         <thead>
         <tr><th>Time</th><th>Team 1</th><th>Team 2</th></tr>
         </thead>

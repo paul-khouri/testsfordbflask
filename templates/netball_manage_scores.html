@@ -1,14 +1,16 @@
 {% extends "layout.html" %}
-
+{% block heading %} Update Results {% endblock %}
 {% block content %}
 <style>
-
+label{
+    font-size: 1em;
+}
 
 
 
 
 </style>
-<div class="container-sm border border-2 p-0">
+<div class="container-sm border border-2 p-2 my-3">
     {% if complete %}
     <div class="msg text-center"> Your score has been updated</div>
     {% endif %}

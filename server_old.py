@@ -11,7 +11,7 @@ db_path = 'data_netball/netball.sqlite'
 def index():
     sql = """select game_id, strftime('%Y-%m-%d ', game_date) as "Date", strftime('%H:%M', game_date) as "Time", team_1, team_2 from game"""
     draw = run_search_query_tuples(sql,(),db_path, True)
-    return render_template("netball.html", games=draw)
+    return render_template("draw.html", games=draw)
 
 
 @app.route('/results')

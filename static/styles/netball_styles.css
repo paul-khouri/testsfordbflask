@@ -16,9 +16,10 @@ h1{
 }
 .overlay{
     position:absolute;
+    width:100%;
     top:50%;
     left:50%;
-    color:white;
+    color:rgba(255,255,255,0.75);
     font-size: 8em;
     transform: translate(-50%,-50%);
 
@@ -30,14 +31,23 @@ h1{
     font-size: 1.25em;
 }
 /* forms */
+input{
+   font-size: 1.5em;
+}
+datalist option{
+    font-size: 1.5em;
+}
+input[type=datetime-local]{
+    font-size: 1.5em;
+}
 input[type=number]{
     max-width: 6em;
-    font-size: 1.5em;
+    font-size: 1.2em;
     text-align: center;
     min-width: 3em;
 }
 label{
-    font-size: 1.2em;
+    font-size: 1.5em;
     min-width:8em;
 }
 /* message flash */
@@ -82,5 +92,12 @@ to {background-color: rgba(0,255,0,0); color:white; }
 }
 .btn-outline:hover{
     background-color:var(--titles-trans);
+
+}
+
+@media only screen and (max-width: 992px) {
+  .overlay{
+      font-size: 4em;
+  }
 
 }

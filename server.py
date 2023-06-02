@@ -23,7 +23,7 @@ def draw():
     join team b on  d.team_1 = b.team_id
     join team c on  d.team_2 = c.team_id """
     draw = run_search_query_tuples(sql, (), db_path, True)
-    return render_template("netball.html", games=draw)
+    return render_template("draw.html", games=draw)
 
 
 @app.route('/results')

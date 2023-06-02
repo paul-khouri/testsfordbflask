@@ -17,7 +17,7 @@
 
 <body>
 
- <nav class="navbar navbar-expand-sm px-5" >
+ <nav class="navbar navbar-expand-sm px-lg-5" >
   <div class="container-fluid">
     <a class="navbar-brand" href="{{ url_for('index') }}">Home</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
@@ -62,17 +62,20 @@
     </div>
   </div>
 </nav>
- <div class="container-fluid bg-dark m-0 position-relative">
-    <img class="img-fluid mx-auto d-block" src="{{ url_for('static',filename='images/banner_netball_1.jpg') }}" alt="Banner image">
+ {% set banner = 'banner_netball_1_slice.jpg' %}
+ <div class="container-fluid bg-black m-0 p-5 position-relative">
+    <img class="img-fluid mx-auto d-block"
+         {% block banner %}src="{{ url_for('static',filename='images/'+banner) }}{% endblock %}"
+         alt="Banner image">
 <div class="text-center overlay">Hot Shots</div>
 </div>
- <div class="container-fluid bg-dark text-center fs-1"> <h1>{% block heading %} Home {% endblock %}</h1></div>
+ <div class="container-fluid bg-dark text-center p-2 fs-1"> <h1>{% block heading %} Home {% endblock %}</h1></div>
 
 
 {% block content %}
 
  {% endblock %}
-<footer class="bg-dark">
+<footer class="bg-dark p-5">
     <h1 class="text-center">Footer</h1>
 </footer>
 

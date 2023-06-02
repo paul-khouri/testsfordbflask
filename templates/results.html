@@ -1,21 +1,26 @@
 {% extends "layout.html" %}
-
+{% block heading %} Results {% endblock %}
 {% block content %}
 <style>
     .table{
         font-size: 1.25em;
     }
 </style>
-<div class="container bg-light">
+<div class="container bg-light my-3">
+
+<div class="text-end p-3">
+<a class="btn btn-info" href="{{ url_for('allscores') }}" role="button">Update all scores </a>
+</div>
+
 {% set ns=namespace(drawdate = "") %}
 
 {% for row in scores %}
     {% if loop.index0 == 0 %}
         {% set ns.drawdate=row['Date'] %}
-        <h2 class="text-center">Results: {{ns.drawdate}}</h2>
-    <div class="text-end">
-     <a class="btn btn-info" href="{{ url_for('allscores') }}" role="button">Update all scores </a>
-        </div>
+        <h2 class="text-center">{{ns.drawdate}}</h2>
+
+
+
         <table class="table w-50 mx-auto">
         <thead>
         <tr><th>Team 1</th><th>Score</th><th>Team 2</th><th>Score</th></tr>
@@ -25,7 +30,7 @@
     {% if ns.drawdate != row['Date'] %}
         {% set ns.drawdate=row['Date'] %}
         </table>
-        <h2 class="text-center">Results: {{ns.drawdate}}</h2>
+        <h2 class="text-center">{{ns.drawdate}}</h2>
         <table class="table w-50 mx-auto">
         <thead>
         <tr><th>Team 1</th><th>Score</th><th>Team 2</th><th>Score</th></tr>
