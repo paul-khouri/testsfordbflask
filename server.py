@@ -100,10 +100,20 @@ def allscores():
 @app.route('/addgame', methods=['GET', 'POST'])
 def addgame():
     if request.method == "GET":
+        # get teams for option list
         sql = "select team_id, team_name from team"
         values_tuple=()
         result = run_search_query_tuples(sql,values_tuple,db_path, True)
-        return render_template("addgame.html", teams=result)
+        data=request.args
+        if 'id' in data.keys():
+            sql = "select draw_date, team_1, team_2 from draw where draw_id=?"
+            values_tuple = (data['id'],)
+            selected_draw = run_search_query_tuples(sql, values_tuple, db_path, True)
+            draw_date=selected_draw[0]['draw_date'].replace(" ", "T")
+            print(draw_date)
+            return render_template("addgame.html", teams=result, draw_date = draw_date, selected_draw=selected_draw[0])
+        else:
+            return render_template("addgame.html", teams=result)
     elif request.method == "POST":
         f = request.form
         print(f)

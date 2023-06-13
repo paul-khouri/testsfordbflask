@@ -13,37 +13,48 @@
 </style>
 <div class="container-sm my-3 p-3">
     <div class="text-center"> <h1>Add a new game</h1></div>
+
 <form action="{{url_for('addgame')}}" method="POST">
     <div>
-            <label for="event" class="form-label"> Date and time of the event:</label>
-            <input id="event"
-                   class="form-control"
-                   type="datetime-local"
-                   name="draw_date"
-                   min="2023-01-01T00:00"
-                   max="2023-12-31T00:00"
-                   value = "2023-04-08T12:30"
-                   required />
-            <span class="validity"></span>
-      </div>
-       <div>
-           <label for="team1" class="form-label"> Team 1:</label>
-            <select class="form-control" name="team_1" id="team1" required>
-                <option value=""> Select your Team </option>
-                {%  for row in teams %}
-                    <option value="{{ row['team_id']}}">{{ row['team_name']}}</option>
-                {%  endfor %}
-            </select>
-       </div>
-        <div>
-           <label for="team2" class="form-label"> Team 2:</label>
-            <select class="form-control" name="team_2" id="team2" required>
-                                <option value=""> Select your Team</option>
-                {%  for row in teams %}
-                    <option value="{{ row['team_id']}}">{{ row['team_name']}}</option>
-                {%  endfor %}
-            </select>
-        </div>
+        <label for="event" class="form-label"> Date and time of the event:</label>
+        <input id="event"
+               class="form-control"
+               type="datetime-local"
+               name="draw_date"
+               min="2023-01-01T00:00"
+               max="2023-12-31T00:00"
+               value = "{{ draw_date}}"
+               required />
+        <span class="validity"></span>
+    </div>
+    <div>
+       <label for="team1" class="form-label"> Team 1:</label>
+        <select class="form-control" name="team_1" id="team1" required>
+            <option value=""> Select your Team </option>
+            {%  for row in teams %}
+                <option value="{{ row['team_id']}}"
+                {% if selected_draw %}
+                {% if row['team_id']==selected_draw['team_1'] %} selected{% endif %}
+                {%  endif %}>
+                {{ row['team_name']}}
+                </option>
+            {%  endfor %}
+        </select>
+    </div>
+    <div>
+       <label for="team2" class="form-label"> Team 2:</label>
+        <select class="form-control" name="team_2" id="team2" required>
+                            <option value=""> Select your Team</option>
+            {%  for row in teams %}
+            <option value="{{ row['team_id']}}"
+            {% if selected_draw %}
+            {% if row['team_id']==selected_draw['team_2'] %} selected{% endif %}
+            {%  endif %}>
+            {{ row['team_name']}}
+            </option>
+            {%  endfor %}
+        </select>
+    </div>
     <div class="text-end mb-2">
         <button type="reset" class="btn btn-primary">Reset</button>
         <button type="submit" class="btn btn-primary">Submit</button>
@@ -51,9 +62,9 @@
 </form>
     <script>
         let a = document.querySelector("#team1")
-        //a.value="WGC"
+        //a.value=1
          let b = document.querySelector("#team2")
-        //b.value="Hot Shots 1"
+        //b.value=2
     </script>
 </div>
 
