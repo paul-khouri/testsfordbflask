@@ -3,29 +3,47 @@
 
 {% block heading %} Draw {% endblock %}
 {% block content %}
+    <style>
+    .table{
+        width:50%;
+    }
+    @media only screen and (max-width: 992px) {
+  .table{
+      width:100%;
+  }
 
-<div class="container bg-light my-3 py-3">
+}
+    </style>
+
+<div class="container-lg bg-light my-3 py-3">
 {% set ns=namespace(drawdate = "") %}
 {% for row in games %}
     {% if loop.index0 == 0 %}
         {% set ns.drawdate=row['Date'] %}
         <h2 class="text-center">{{ns.drawdate}}</h2>
-        <table class="table  mx-auto">
+        <table class="table  mx-auto text-center">
         <thead>
-        <tr><th>Time</th><th>Team 1</th><th>Team 2</th></tr>
+        <tr><th>Time</th><th>Team 1</th><th>Team 2</th><th> Action</th><th> Action</th></tr>
         </thead>
     {% endif %}
     {% if ns.drawdate != row['Date'] %}
         {% set ns.drawdate=row['Date'] %}
         </table>
         <h2 class="text-center">{{ns.drawdate}}</h2>
-        <table class="table  mx-auto">
+        <table class="table  mx-auto text-center">
         <thead>
-        <tr><th>Time</th><th>Team 1</th><th>Team 2</th></tr>
+        <tr><th>Time</th><th>Team 1</th><th>Team 2</th> <th> Action</th><th> Action</th></tr>
         </thead>
     {% endif %}
-    <tr><td>{{ row['Time'] }}</td><td> {{ row['team_1'] }}</td><td>{{ row['team_2'] }}</td></tr>
-     <tr><td colspan="4" class="text-end"><a class="btn btn-info" href="{{ url_for('addgame' , id=row['game_id'] ) }}" role="button">Edit</a></td> </tr>
+    <tr><td>{{ row['Time'] }}</td><td> {{ row['team_1'] }}</td><td>{{ row['team_2'] }}</td>
+    <td> <a class="btn btn-info" href="{{ url_for('addgame' , id=row['game_id'] ) }}" role="button">Edit</a>
+    </td><td>
+        <form action="{{ url_for('addgame', id=row['game_id'], task='delete' ) }}" method="POST">
+         <button type="submit" class="btn btn-info">Delete</button>
+        </form>
+
+    </td>
+    </tr>
 {% endfor %}
 </table>
     </div>

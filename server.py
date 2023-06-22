@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from db_functions import run_search_query_tuples, run_commit_query
-from q_set import get_members, get_class, get_class_registrations
+from q_set import get_members, get_class, get_class_registrations, get_registrations_members
 from datetime import datetime
 
 app = Flask(__name__)
@@ -21,7 +21,8 @@ def draw():
     c.team_name as "team_2"
     from draw d
     join team b on  d.team_1 = b.team_id
-    join team c on  d.team_2 = c.team_id """
+    join team c on  d.team_2 = c.team_id 
+    order by Date desc, Time asc"""
     draw = run_search_query_tuples(sql, (), db_path, True)
     return render_template("draw.html", games=draw)
 
@@ -111,19 +112,39 @@ def addgame():
             selected_draw = run_search_query_tuples(sql, values_tuple, db_path, True)
             draw_date=selected_draw[0]['draw_date'].replace(" ", "T")
             print(draw_date)
-            return render_template("addgame.html", teams=result, draw_date = draw_date, selected_draw=selected_draw[0])
+            return render_template("addgame.html",
+                                   teams=result,
+                                   draw_date = draw_date,
+                                   selected_draw=selected_draw[0],
+                                   id=data['id'])
         else:
             return render_template("addgame.html", teams=result)
     elif request.method == "POST":
         f = request.form
-        print(f)
-        draw_date = f['draw_date'].replace("T", " ")
-        print(draw_date)
-        sql = """ insert into draw( draw_date, team_1, team_2)
-        values(?,?,?)"""
-        values_tuple = (draw_date, f['team_1'], f['team_2'])
-        result = run_commit_query(sql, values_tuple, db_path)
-        return redirect(url_for('index'))
+        data = request.args
+        if all(value in data.keys() for value in ['id', 'task']):
+            if data['task'] == "update":
+                sql = "update draw set draw_date=? , team_1 = ?, team_2 = ? where draw_id =?"
+                draw_date = f['draw_date'].replace("T", " ")
+                values_tuple = (draw_date, f['team_1'], f['team_2'], data['id'])
+                result = run_commit_query(sql, values_tuple, db_path)
+                print("Updating")
+                return redirect(url_for('draw'))
+            elif data['task'] == "delete":
+                sql = "delete from draw where draw_id=?"
+                values_tuple= (data['id'],)
+                result = run_commit_query(sql, values_tuple, db_path)
+                return redirect(url_for('draw'))
+            else:
+                return "<h1>  Draw: Something went wrong </h1>"
+        else:
+            draw_date = f['draw_date'].replace("T", " ")
+            print(draw_date)
+            sql = """ insert into draw( draw_date, team_1, team_2)
+            values(?,?,?)"""
+            values_tuple = (draw_date, f['team_1'], f['team_2'])
+            result = run_commit_query(sql, values_tuple, db_path)
+            return redirect(url_for('draw'))
 
 
 @app.route('/member')
@@ -153,8 +174,8 @@ def registration():
         if 'errormessage' in data.keys():
             message = data['errormessage']
         if 'delete_id' in data.keys():
-            sql = "delete from registration where member_id = ?"
-            values_tuple = (data['delete_id'],)
+            sql = "delete from registration where member_id = ? and class_id=?"
+            values_tuple = (data['delete_id'],data['id'])
             result = run_commit_query(sql, values_tuple, db_path)
         result = get_class_registrations(data['id'], db_path)
         member_result = get_members(db_path)
@@ -186,6 +207,31 @@ def registration():
                                 errormessage=errormessage))
 
         # return render_template("error.html", message="Posted")
+
+@app.route('/member_classes', methods=["GET","POST"])
+def member_classes():
+    if request.method == "GET":
+        result = get_registrations_members(db_path)
+        return render_template('member_classes.html', member_classes=result)
+    elif request.method == "POST":
+        sql="delete from registration"
+        result = run_commit_query(sql, (), db_path)
+        print(result)
+        f=request.form
+        for x in f:
+            c = f.getlist(x)
+            for row in c:
+                sql = """insert into registration(member_id, class_id,registration_date, attendance)
+                values(
+                (select member_id from member where member_name = ?),
+                (select class_id from class where class_name = ?),
+                datetime('now', 'localtime'),
+                0)"""
+                values_tuple = (x, row)
+                result = run_commit_query(sql, values_tuple, db_path)
+            #print(f.getlist(x))
+        return redirect(url_for('member_classes'))
+
 
 
 if __name__ == "__main__":

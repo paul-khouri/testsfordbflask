@@ -126,6 +126,10 @@ def netball():
     sql_path = 'data_netball/netball_install.sql'
     db_path = 'data_netball/netball.sqlite'
     execute_external_script(sql_path, db_path)
+
+
+
+
     csv_path='data_netball/DBPracticeSheets-matches.csv'
     csv_data = file_reader(csv_path)
     csv_data.pop(0)

@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block heading %} Members {% endblock %}
+{% block content %}
+    <div class="container bg-light">
+
+<div class="table-responsive-lg">
+<style>
+    label{
+        min-width: min-content;
+        font-size: 1rem;
+
+
+    }
+    input[type='checkbox' i]{
+        width:1rem;
+        height:1rem;
+        background-color: pink!important;
+    }
+    tr td{
+        max-width: 1em;
+    }
+</style>
+<form action="{{ url_for('member_classes') }}" method="POST">
+    <div class="text-end m-2">
+        <button type="reset" class="btn btn-info">Reset</button>
+        <button type="submit" class="btn btn-info">Save all</button>
+    </div>
+    <table class="table">
+        {% for row in member_classes %}
+            <tr><td>{{ row['member_name'] }}</td>
+            <td>{{ row['member_type'] }}</td>
+            {% for class in row['classes']  %}
+                {% if row['classes'][class] == True  %}
+                <td>
+                   <input class="" type="checkbox" value="{{ class }}" id="{{ row['member_name'] }}{{ loop.index0 }}" name="{{ row['member_name'] }}" checked>
+                <label class="" for="{{ row['member_name'] }}{{ loop.index0 }}">
+                    {{ class }}
+                </label>
+
+                </td>
+                {% else %}
+                <td>
+                  <input class="" type="checkbox" value="{{ class }}" id="{{ row['member_name'] }}{{ loop.index0 }}" name="{{ row['member_name'] }}">
+                <label class="" for="{{ row['member_name'] }}{{ loop.index0 }}">
+                    {{ class }}
+                </td>
+                {%  endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+
+    </table>
+</form>
+</div>
+    </div>
+{% endblock %}

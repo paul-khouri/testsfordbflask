@@ -1,4 +1,4 @@
-from db_functions import run_search_query_tuples
+from db_functions import run_search_query_tuples, file_reader
 
 
 def output(result):
@@ -89,12 +89,55 @@ def get_registrations(db_path):
     output(result)
 
 
+def get_registrations_members(db_path):
+    sql = """ select m.member_name, c.class_name ,t.team_name, 
+    m.member_type, m.email, m.dob
+    from member m 
+    join registration r on m.member_id = r.member_id
+    join class c on c.class_id = r.class_id
+    left join team t on t.team_id = m.team_id
+    order by m.member_name asc"""
 
+    result = run_search_query_tuples(sql,(), db_path, True)
+    output(result)
+    class_dict = {}
+    for row in result:
+        if row['class_name'] not in class_dict.keys():
+            class_dict[ row['class_name'] ]=False
+    print(class_dict)
+    member={}
+    member_name = ""
+    registration_set = []
+    for row in result:
+        if row['member_name'] != member_name:
+            member_name = row['member_name']
+            member={}
+            member['member_name'] = row['member_name']
+            member['team_name'] = row['team_name']
+            member['member_type'] = row['member_type']
+            member['email'] = row['email']
+            member['dob'] = row['dob']
+            member['classes'] = class_dict.copy()
+            registration_set.append(member)
+        if row['class_name'] in member['classes'].keys():
+            member['classes'][row['class_name']]=True
+    for r in registration_set:
+        print(r)
+    #output(result)
+
+
+def file_reader_test():
+    csv_path = 'data_netball/members.csv'
+    collected_data = file_reader(csv_path)
+    collected_data.pop(0)
+    #for row in collected_data:
+        #print(row[0])
 
 
 
 if __name__ == "__main__":
     db_path = 'data_netball/netball.sqlite'
+    file_reader_test()
 
     #get_transpose()
     #get_teams(db_path)
@@ -102,4 +145,4 @@ if __name__ == "__main__":
     #get_schema(db_path)
     #get_members(db_path)
     #get_class(db_path)
-    get_registrations(db_path)
+    get_registrations_members(db_path)
