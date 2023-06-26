@@ -1,0 +1,152 @@
+{% extends "layout.html" %}
+{%  block banner %}src="{{ url_for('static',filename='images/banner_netball_1_slice.jpg') }}{% endblock %}
+
+{% block heading %} Accordion Test Page (Draw) {% endblock %}
+{% block content %}
+    <style>
+    .table{
+        width:50%;
+    }
+    @media only screen and (max-width: 992px) {
+  .table{
+      width:100%;
+  }
+
+}
+    </style>
+
+<div class="container-lg bg-light my-3 py-3">
+ <div class="accordion" id="accordionPanelsStayOpen__1">
+{% set ns=namespace(drawdate = "") %}
+{% for row in games %}
+    {% if loop.index0 == 0 %}
+        {% set ns.drawdate=row['Date'] %}
+
+        <div class="accordion-item ">
+        <h2 class="accordion-header" id="panel-{{ loop.index0 }}">
+        <button class="accordion-button collapsed ps-5" type="button" data-bs-toggle="collapse" data-bs-target="#Open-{{ loop.index0 }}">
+       <h2 class="text-center w-100">{{ns.drawdate}}</h2>
+        </button>
+        </h2>
+        <div id="Open-{{ loop.index0 }}" class="accordion-collapse collapse" >
+
+        <div class="accordion-body">
+        <table class="table  mx-auto text-center">
+        <thead>
+        <tr><th>Time</th><th>Team 1</th><th>Team 2</th><th> Action</th><th> Action</th></tr>
+        </thead>
+    {% endif %}
+    {% if ns.drawdate != row['Date'] %}
+        {% set ns.drawdate=row['Date'] %}
+        </table>
+        </div>
+        </div>
+        </div>
+
+        <div class="accordion-item ">
+        <h2 class="accordion-header" id="panel-{{ loop.index0 }}">
+        <button class="accordion-button collapsed ps-5" type="button" data-bs-toggle="collapse" data-bs-target="#Open-{{ loop.index0 }}">
+        <h2 class="text-center w-100">{{ns.drawdate}}</h2>
+        </button>
+        </h2>
+        <div id="Open-{{ loop.index0 }}" class="accordion-collapse collapse" >
+
+        <div class="accordion-body">
+        <table class="table  mx-auto text-center">
+        <thead>
+        <tr><th>Time</th><th>Team 1</th><th>Team 2</th><th> Action</th><th> Action</th></tr>
+        </thead>
+    {% endif %}
+    <tr><td>{{ row['Time'] }}</td><td> {{ row['team_1'] }}</td><td>{{ row['team_2'] }}</td>
+    <td> <a class="btn btn-info" href="{{ url_for('addgame' , id=row['game_id'] ) }}" role="button">Edit</a>
+    </td><td>
+        <form action="{{ url_for('addgame', id=row['game_id'], task='delete' ) }}" method="POST">
+         <button type="submit" class="btn btn-info">Delete</button>
+        </form>
+    </td>
+    </tr>
+{% endfor %}
+</table>
+        </div>
+        </div>
+        </div>
+ </div>
+
+<!-- start accordion -->
+
+
+ <div class="accordion" id="accordionPanelsStayOpen">
+
+ <!-- all header -->
+    <div class="accordion-item ">
+      <h2 class="accordion-header" id="panel-One">
+        <button class="accordion-button collapsed ps-5" type="button" data-bs-toggle="collapse" data-bs-target="#Open-one">
+          Accordion Item #1
+        </button>
+      </h2>
+      <div id="Open-one" class="accordion-collapse collapse" >
+        <div class="accordion-body">
+ <!-- run table -->.
+          <strong>This is the first item's accordion body.</strong> It is shown by default, until the
+          collapse plugin adds the appropriate classes that we use to style each element. These classes
+          control the overall appearance, as well as the showing and hiding via CSS transitions. You can
+          modify any of this with custom CSS or overriding our default variables. It's also worth noting
+          that just about any HTML can go within the <code>.accordion-body</code>, though the
+          transition does limit overflow.
+<!-- closing -->
+        </div>
+      </div>
+    </div>
+
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panel-Two">
+        <button class="accordion-button collapsed ps-5" type="button" data-bs-toggle="collapse" data-bs-target="#Open-two">
+          Accordion Item #2
+        </button>
+      </h2>
+      <div id="Open-two" class="accordion-collapse collapse" >
+        <div class="accordion-body">
+          <strong>This is the second item's accordion body.</strong> It is hidden by default,
+          until the collapse plugin adds the appropriate classes that we use to style each element.
+          These classes control the overall appearance, as well as the showing and hiding via CSS transitions.
+          You can modify any of this with custom CSS or overriding our default variables. It's also worth noting
+          that just about any HTML can go within the <code>.accordion-body</code>, though the transition
+          does limit overflow.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panel-Three">
+        <button class="accordion-button collapsed ps-5" type="button" data-bs-toggle="collapse" data-bs-target="#Open-three">
+          Accordion Item #3
+        </button>
+      </h2>
+      <div id="Open-three" class="accordion-collapse collapse" >
+        <div class="accordion-body">
+         <p> <strong>This is the second item's accordion body.</strong> It is hidden by default,
+          until the collapse plugin adds the appropriate classes that we use to style each element.
+          These classes control the overall appearance, as well as the showing and hiding via CSS transitions.
+          You can modify any of this with custom CSS or overriding our default variables. It's also worth noting
+          that just about any HTML can go within the <code>.accordion-body</code>, though the transition
+          does limit overflow.</p>
+
+          <p><strong>This is the second item's accordion body.</strong> It is hidden by default,
+          until the collapse plugin adds the appropriate classes that we use to style each element.
+          These classes control the overall appearance, as well as the showing and hiding via CSS transitions.
+          You can modify any of this with custom CSS or overriding our default variables. It's also worth noting
+          that just about any HTML can go within the <code>.accordion-body</code>, though the transition
+          does limit overflow.
+          </p>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+
+<!-- end container div -->
+    </div>
+{% endblock %}

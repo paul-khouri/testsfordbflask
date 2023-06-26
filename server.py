@@ -24,7 +24,11 @@ def draw():
     join team c on  d.team_2 = c.team_id 
     order by Date desc, Time asc"""
     draw = run_search_query_tuples(sql, (), db_path, True)
-    return render_template("draw.html", games=draw)
+    data=request.args
+    if 'testpage' in data.keys():
+        return render_template("draw_testpage.html", games=draw)
+    else:
+        return render_template("draw.html", games=draw)
 
 
 @app.route('/results')
@@ -39,6 +43,8 @@ def results():
     join team b on  d.team_1 = b.team_id
     join team c on  d.team_2 = c.team_id """
     scores = run_search_query_tuples(sql,(),db_path, True)
+
+
     return render_template("results.html", scores=scores)
 
 
